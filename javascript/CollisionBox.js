@@ -42,7 +42,7 @@ class CollisionBox {
         low = mid; // If the middle box is still inside, then the box needs to go out less.
       }
     }
-    this.pos.shift( this.parent.vel.getScaled( (high+low)/2 ) );
+    this.pos.shift( this.parent.vel.getScaled( low ) );
   }
 
 }
