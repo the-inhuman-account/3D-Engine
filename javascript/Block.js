@@ -12,6 +12,7 @@ class Block {
   }
   
   update() {
+    this.display();
   }
 
 }
