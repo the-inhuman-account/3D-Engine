@@ -1,0 +1,47 @@
+class GameController {
+  
+  constructor() {
+    this.player = new NPC(this, new Vector3D(0, 0, 1), new Vector3D(1, 1, 2), "");
+    this.NPCs = [
+      new NPC(this, new Vector3D(4, 0, 1), new Vector3D(1, 1, 2), ""),
+      new NPC(this, new Vector3D(-3, 2, 1.2), new Vector3D(1, 1, 2.4), ""),
+      new NPC(this, new Vector3D(0, 2, 0.7), new Vector3D(1, 1, 1.4), ""),
+    ];
+    this.scenes = [
+      {
+        "title": "Introduction",
+        "objects": [
+          new Block(this, new Vector3D(0, 0, -1), new Vector3D(10, 10, 1)),
+          new Block(this, new Vector3D(0, 0, 1), new Vector3D(1, 2, 2))
+        ]
+      },
+      {
+        "title": "Nihilism",
+        "objects": [
+          new Block(this, new Vector3D(0, 10, -1), new Vector3D(10, 10, 1)),
+          new Block(this, new Vector3D(0, -4, 1), new Vector3D(1, 2, 2))
+        ]
+      }
+    ];
+    this.sceneNum = 0;
+  }
+  
+  get scene() {
+    return this.scenes[this.sceneNum];
+  }
+  
+  checkCollision(object) {
+    
+  }
+  
+  update() {
+    this.player.update();
+    for (npc in this.NPCs) {
+      npc.update();
+    }
+    for (obj in this.scene.objects) {
+      obj.update();
+    }
+  }
+  
+}
