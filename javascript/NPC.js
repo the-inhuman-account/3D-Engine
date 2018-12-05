@@ -9,6 +9,9 @@ class NPC {
     this.texturePath = texturePath; // file path for the texture image
   }
   
+  display() {
+  }
+  
   physics() {
     this.pos.shift(this.vel);
     this.GC.checkCollisions(this);
@@ -16,6 +19,7 @@ class NPC {
   
   update() {
     this.physics();
+    this.display();
   }
 
 }
