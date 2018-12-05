@@ -2,7 +2,7 @@ class CollisionBox {
 
   constructor(parent) {
     // The collision box is from the center of the parent NPC and extends outward to make a box with dimension according to the size of the parent (x, y, z lengths).
-    this.parent = parent; // The NPC for which the collision box is designed.
+    this.parent = parent; // The object for which the collision box is designed. Whatever it is, it needs two things: a pos vector and a size vector.
     this.uncollideSteps = 10; // The steps the CollisionBox will binary search to correctly "unstuck" the object.
   }
   
