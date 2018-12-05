@@ -13,5 +13,9 @@ class NPC {
     this.pos.shift(this.vel);
     this.GC.checkCollisions(this);
   }
+  
+  update() {
+    this.physics();
+  }
 
 }
