@@ -41,14 +41,6 @@ class GameController {
     return this.scenes[this.sceneNum];
   }
 
-  box(pos, size, texture) {
-    var geometry = new THREE.BoxGeometry(size.x, size.y, size.z);
-    geometry.translate(pos.x, pos.y, pos.z);
-    var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-    var cube = new THREE.Mesh( geometry, material );
-    this.ThreeScene.add( cube );
-  }
-  
   checkCollision(object) {
     var npc;
     for (var i in this.scene.npcs) {
@@ -66,6 +58,19 @@ class GameController {
     }
   }
   
+  init() {
+    var npc;
+    for (var i in this.scene.npcs) {
+      npc = this.scene.npcs[i];
+      npc.collisionBox.initRender();
+    }
+    var obj;
+    for (var i in this.scene.objects) {
+      obj = this.scene.objects[i];
+      obj.collisionBox.initRender();
+    }
+  }
+
   update() {
     this.delta = this.clock.getDelta();
     this.player.update();

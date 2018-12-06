@@ -8,12 +8,7 @@ class Block {
     this.texture = texture; // a file path leading to a texture
   }
   
-  display() {
-      this.GC.box(this.pos, this.size, this.texturePath);
-  }
-  
   update() {
-    this.display();
   }
 
 }

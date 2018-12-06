@@ -10,6 +10,7 @@ renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
 var GC = new GameController(scene, camera, controls);
+GC.init();
 
 var animate = function () {
     requestAnimationFrame( animate );

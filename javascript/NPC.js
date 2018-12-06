@@ -12,9 +12,9 @@ class NPC {
   }
 
   display() {
-      this.GC.box(this.pos, this.size, this.texturePath);
+      this.collisionBox.display();
   }
-  
+
   physics() {
     this.vel.z += PHYSICS.GRAVITY * GC.delta;
     this.vel.scale(PHYSICS.FRICTION);

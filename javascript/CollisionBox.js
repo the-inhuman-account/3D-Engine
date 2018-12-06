@@ -1,9 +1,11 @@
 class CollisionBox {
 
-  constructor(parent) {
+  constructor(parent, render = true) {
     // The collision box is from the center of the parent NPC and extends outward to make a box with dimension according to the size of the parent (x, y, z lengths).
     this.parent = parent; // The object for which the collision box is designed. Whatever it is, it needs two things: a pos vector and a size vector.
     this.uncollideSteps = 10; // The steps the CollisionBox will binary search to correctly "unstuck" the object.
+
+    this.render = true;
   }
   
   static isInside(aPos, aSize, bPos, bSize) {
@@ -22,6 +24,17 @@ class CollisionBox {
     return this.parent.size;
   }
   
+  initRender() {
+    this.geometry = new THREE.BoxGeometry(this.parent.size.x, this.parent.size.y, this.parent.size.z);
+    this.material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+    this.cube = new THREE.Mesh( this.geometry, this.material );
+    this.parent.GC.ThreeScene.add( this.cube );
+  }
+
+  display() {
+      this.cube.position.set(this.pos.x, this.pos.y, this.pos.z);
+  }
+
   isInside(other) {
     return CollisionBox.isInside(this.pos, this.size, other.pos, other.size);
   }
