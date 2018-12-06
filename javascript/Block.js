@@ -9,6 +9,7 @@ class Block {
   }
   
   display() {
+      this.GC.box(this.pos, this.size, this.texturePath);
   }
   
   update() {

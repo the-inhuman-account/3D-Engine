@@ -1,12 +1,16 @@
 class GameController {
   
-  constructor() {
-    this.player = new NPC(this, new Vector3D(0, 0, 1), new Vector3D(1, 1, 2), "");
+  constructor(ThreeScene, ThreeCamera, ThreeControls) {
+    this.ThreeScene = ThreeScene; // The scene object from Three.js
+    this.ThreeCamera = ThreeCamera; // The camara object from Three.js
+    this.ThreeControls = ThreeControls; // The controls object from Three.js
+    this.player = new Player(this, new Vector3D(0, 0, 1), new Vector3D(4, 4, 8), "", this.ThreeControls);
+    this.player.speed = 1;
     this.scenes = [
       {
         "title": "Introduction",
         "objects": [
-          new Block(this, new Vector3D(0, 0, -1), new Vector3D(10, 10, 1)),
+          new Block(this, new Vector3D(0, 0, -1), new Vector3D(1, 1, 1)),
           new Block(this, new Vector3D(0, 0, 1), new Vector3D(1, 2, 2))
         ],
         "npcs": [
@@ -27,19 +31,35 @@ class GameController {
       }
     ];
     this.sceneNum = 0;
+    
+    // Store a clock for physics calculations.
+    this.clock = new THREE.Clock();
+    this.delta;
   }
   
   get scene() {
     return this.scenes[this.sceneNum];
   }
+
+  box(pos, size, texture) {
+    var geometry = new THREE.BoxGeometry(size.x, size.y, size.z);
+    geometry.translate(pos.x, pos.y, pos.z);
+    var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+    var cube = new THREE.Mesh( geometry, material );
+    this.ThreeScene.add( cube );
+  }
   
   checkCollision(object) {
-    for (npc in this.scene.npcs) {
+    var npc;
+    for (var i in this.scene.npcs) {
+      npc = this.scene.npcs[i];
       if (npc !== object) { // Ensure we don't collide the object with itself.
         object.collisionBox.collideWith(npc);
       }
     }
-    for (obj in this.scene.objects) {
+    var obj;
+    for (var i in this.scene.objects) {
+      obj = this.scene.objects[i];
       if (obj !== object) { // Ensure we don't collide the object with itself.
         object.collisionBox.collideWith(npc);
       }
@@ -47,11 +67,16 @@ class GameController {
   }
   
   update() {
+    this.delta = this.clock.getDelta();
     this.player.update();
-    for (npc in this.scene.npcs) {
+    var npc;
+    for (var i in this.scene.npcs) {
+      npc = this.scene.npcs[i];
       npc.update();
     }
-    for (obj in this.scene.objects) {
+    var obj;
+    for (var i in this.scene.objects) {
+      obj = this.scene.objects[i];
       obj.update();
     }
   }

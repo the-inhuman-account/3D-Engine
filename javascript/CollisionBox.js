@@ -43,6 +43,7 @@ class CollisionBox {
       }
     }
     this.pos.shift( this.parent.vel.getScaled( low ) );
+    this.parent.vel.scale(0);
   }
 
 }

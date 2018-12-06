@@ -1,4 +1,4 @@
-class Vector3D = {
+class Vector3D {
   
   constructor(x, y, z) {
     this.x = x;
@@ -6,12 +6,16 @@ class Vector3D = {
     this.z = z;
   }
   
-  static FromSpherical = function(theta, phi, radius) {
-    return new Vector3D(Math.cos(phi)*Math.sin(theta), Math.sin(phi)*Math.sin(theta), Math.cos(theta)).getScaled(radius).getRotated(pi, new Vector3D(0, 0, 1));
+  static FromSpherical(theta, phi, radius) {
+    return new Vector3D(Math.cos(phi)*Math.sin(theta), Math.sin(phi)*Math.sin(theta), Math.cos(theta)).getScaled(radius).getRotated(PI, new Vector3D(0, 0, 1));
   }
   
   clone() {
     return new Vector3D(this.x, this.y, this.z);
+  }
+
+  toThreeVector() {
+      return new THREE.Vector3(this.x, this.y, this.z);
   }
   
   getMagnitude() {
