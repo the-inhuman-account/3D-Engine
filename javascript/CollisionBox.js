@@ -51,6 +51,9 @@ class CollisionBox {
     // Reposition the NPC such that it is no longer inside the other object.
     // Binary search the optimal distance to extract it: more than nothing, less than the entire negative velocity.
     var vel = this.parent.vel.getShifted(other.vel.getScaled(-1));
+    if (vel.x === 0 && vel.y === 0 && vel.z === 0) {
+        vel = new Vector3D(0, -1, 0); // The last resort is to force the object to move up.
+    }
     var high = 0, low = -1, mid, i;
     for (i = 0; i < this.uncollideSteps; i++) {
       mid = (high + low) / 2;
