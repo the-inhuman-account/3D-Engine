@@ -7,7 +7,7 @@ class Vector3D {
   }
   
   static FromSpherical(theta, phi, radius) {
-    return new Vector3D(Math.cos(phi)*Math.sin(theta), Math.sin(phi)*Math.sin(theta), Math.cos(theta)).getScaled(radius).getRotated(PI, new Vector3D(0, 0, 1));
+    return new Vector3D(Math.cos(phi)*Math.sin(theta), Math.cos(theta), Math.sin(phi)*Math.sin(theta)).getScaled(radius).getRotated(PI, new Vector3D(0, 1, 0));
   }
   
   clone() {
@@ -72,3 +72,5 @@ class Vector3D {
   }
   
 }
+
+var UP = new Vector3D(0, 1, 0);

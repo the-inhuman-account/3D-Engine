@@ -26,7 +26,7 @@ class CollisionBox {
   
   initRender() {
     this.geometry = new THREE.BoxGeometry(this.parent.size.x, this.parent.size.y, this.parent.size.z);
-    this.material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+    this.material = new THREE.MeshPhongMaterial( { color: parseInt(this.parent.color) } );
     this.cube = new THREE.Mesh( this.geometry, this.material );
     this.parent.GC.ThreeScene.add( this.cube );
   }
@@ -55,8 +55,34 @@ class CollisionBox {
         low = mid; // If the middle box is still inside, then the box needs to go out less.
       }
     }
-    this.pos.shift( this.parent.vel.getScaled( low ) );
+    // There are only three directions because everything is constrainted be
+    // align with the axes. Thus, only one component of the velocity is
+    // necessary to extract the object. We test them all.
+    var xShifted = this.pos.clone();
+    xShifted.x += this.parent.vel.x * low;
+    if (!CollisionBox.isInside(xShifted, this.size, other.pos, other.size)) {
+        this.parent.vel.x = 0;
+        this.parent.pos = xShifted;
+        return true;
+    }
+    var yShifted = this.pos.clone();
+    yShifted.y += this.parent.vel.y * low;
+    if (!CollisionBox.isInside(yShifted, this.size, other.pos, other.size)) {
+        this.parent.vel.y = 0;
+        this.parent.pos = yShifted;
+        return true;
+    }
+    var zShifted = this.pos.clone();
+    zShifted.z += this.parent.vel.z * low;
+    if (!CollisionBox.isInside(zShifted, this.size, other.pos, other.size)) {
+        this.parent.vel.z = 0;
+        this.parent.pos = zShifted;
+        return true;
+    }
+    // If for whatever reason the object is not axis-aligned, zero all velocity. 
+    this.pos.shift( this.parent.vel.getScaled(low) );
     this.parent.vel.scale(0);
+    return true;
   }
 
 }

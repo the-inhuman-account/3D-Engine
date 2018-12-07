@@ -2,22 +2,21 @@
 <html>
 	<head>
 		<title>Witches and Warfare</title>
-		<style>
-			body {
-				margin: 0;
-			}
-			canvas {
-				width: 100%;
-				height: 100%
-			}
-		</style>
+
+        <link rel="stylesheet" href="style.css" type="text/css" />
 	</head>
 	<body style="margin: 0px;">
+        <div id="instructions-box">
+            <div id="instructions">
+                <span style="font-size: 8vw">Click to Play</span><br />
+                <span style="font-size: 2vw">WASD = Move, SPACE = Jump, Mouse = Move</span>
+            </div>
+        </div>
     	<script src="node_modules/three/build/three.min.js"></script>
-    	<script src="node_modules/three/examples/js/controls/FirstPersonControls.js"></script>
 
 		<script src="javascript/Physics.js"></script>
 		<script src="javascript/Vector3D.js"></script>
+		<script src="javascript/UserInput.js"></script>
 		<script src="javascript/CollisionBox.js"></script>
 		<script src="javascript/Block.js"></script>
 		<script src="javascript/NPC.js"></script>

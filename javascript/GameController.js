@@ -1,22 +1,27 @@
 class GameController {
   
-  constructor(ThreeScene, ThreeCamera, ThreeControls) {
+  constructor(ThreeScene, ThreeCamera) {
     this.ThreeScene = ThreeScene; // The scene object from Three.js
     this.ThreeCamera = ThreeCamera; // The camara object from Three.js
-    this.ThreeControls = ThreeControls; // The controls object from Three.js
-    this.player = new Player(this, new Vector3D(0, 0, 1), new Vector3D(4, 4, 8), "", this.ThreeControls);
-    this.player.speed = 1;
+    this.player = new Player(this, new Vector3D(5, 10, 5), new Vector3D(1, 2, 1), "0x00ff00", "", {
+        "speed": 10,
+        "jumpSpeed": 300,
+        "lookSpeed": 15
+    });
     this.scenes = [
       {
         "title": "Introduction",
         "objects": [
-          new Block(this, new Vector3D(0, 0, -1), new Vector3D(1, 1, 1)),
-          new Block(this, new Vector3D(0, 0, 1), new Vector3D(1, 2, 2))
+          new Block(this, new Vector3D(0, 0, 0), new Vector3D(100, 0.1, 0.1), "0xff0000"),
+          new Block(this, new Vector3D(0, 0, 0), new Vector3D(0.1, 100, 0.1), "0x00ff00"),
+          new Block(this, new Vector3D(0, 0, 0), new Vector3D(0.1, 0.1, 100), "0x0000ff"),
+          new Block(this, new Vector3D(0, 0, -1), new Vector3D(20, 0.5, 20))
         ],
         "npcs": [
-          new NPC(this, new Vector3D(4, 0, 1), new Vector3D(1, 1, 2), ""),
-          new NPC(this, new Vector3D(-3, 2, 1.2), new Vector3D(1, 1, 2.4), ""),
-          new NPC(this, new Vector3D(0, 2, 0.7), new Vector3D(1, 1, 1.4), ""),
+          this.player,
+          new NPC(this, new Vector3D(4, 8, 1), new Vector3D(1, 2, 1), ""),
+          new NPC(this, new Vector3D(-3, 2, 1.2), new Vector3D(0.5, 2.4, 0.5), ""),
+          new NPC(this, new Vector3D(0, 2, 0.7), new Vector3D(1, 1.4, 1), ""),
         ]
       },
       {
@@ -26,6 +31,7 @@ class GameController {
           new Block(this, new Vector3D(-1, 2, -4), new Vector3D(1, 2, 2))
         ],
         "npcs": [
+          this.player,
           new NPC(this, new Vector3D(-1, 2, -2), new Vector3D(1, 1, 2), "")
         ]
       }
@@ -42,20 +48,26 @@ class GameController {
   }
 
   checkCollision(object) {
+    var collides = false;
     var npc;
     for (var i in this.scene.npcs) {
       npc = this.scene.npcs[i];
       if (npc !== object) { // Ensure we don't collide the object with itself.
-        object.collisionBox.collideWith(npc);
+        if (object.collisionBox.collideWith(npc)) {
+            collides = true;
+        }
       }
     }
     var obj;
     for (var i in this.scene.objects) {
       obj = this.scene.objects[i];
       if (obj !== object) { // Ensure we don't collide the object with itself.
-        object.collisionBox.collideWith(npc);
+        if (object.collisionBox.collideWith(obj)) {
+            collides = true;
+        }
       }
     }
+    return collides;
   }
   
   init() {
