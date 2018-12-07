@@ -12,9 +12,7 @@ class Block {
   }
   
   display() {
-      this.collisionBox.cube.position.x = this.pos.x;
-      this.collisionBox.cube.position.y = this.pos.y;
-      this.collisionBox.cube.position.z = this.pos.z;
+      this.collisionBox.display();
   }
   
   update() {

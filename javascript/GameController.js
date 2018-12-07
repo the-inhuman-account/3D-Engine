@@ -79,7 +79,9 @@ class GameController {
     var npc;
     for (var i in this.scene.npcs) {
       npc = this.scene.npcs[i];
-      npc.collisionBox.initRender();
+      if (npc !== this.player) {
+          npc.collisionBox.initRender();
+      }
     }
     var obj;
     for (var i in this.scene.objects) {
