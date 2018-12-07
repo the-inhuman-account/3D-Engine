@@ -26,7 +26,12 @@ class CollisionBox {
   
   initRender() {
     this.geometry = new THREE.BoxGeometry(this.parent.size.x, this.parent.size.y, this.parent.size.z);
-    this.material = new THREE.MeshPhongMaterial( { color: parseInt(this.parent.color) } );
+    if (this.parent.texturePath !== "") {
+        this.material = new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader().load( this.parent.texturePath ) } );
+    }
+    else {
+        this.material = new THREE.MeshPhongMaterial( { color: parseInt(this.parent.color) } );
+    }
     this.cube = new THREE.Mesh( this.geometry, this.material );
     this.parent.GC.ThreeScene.add( this.cube );
   }
@@ -45,6 +50,7 @@ class CollisionBox {
     }
     // Reposition the NPC such that it is no longer inside the other object.
     // Binary search the optimal distance to extract it: more than nothing, less than the entire negative velocity.
+    var vel = this.parent.vel.getShifted(other.vel.getScaled(-1));
     var high = 0, low = -1, mid, i;
     for (i = 0; i < this.uncollideSteps; i++) {
       mid = (high + low) / 2;
@@ -59,21 +65,21 @@ class CollisionBox {
     // align with the axes. Thus, only one component of the velocity is
     // necessary to extract the object. We test them all.
     var xShifted = this.pos.clone();
-    xShifted.x += this.parent.vel.x * low;
+    xShifted.x += vel.x * low;
     if (!CollisionBox.isInside(xShifted, this.size, other.pos, other.size)) {
         this.parent.vel.x = 0;
         this.parent.pos = xShifted;
         return true;
     }
     var yShifted = this.pos.clone();
-    yShifted.y += this.parent.vel.y * low;
+    yShifted.y += vel.y * low;
     if (!CollisionBox.isInside(yShifted, this.size, other.pos, other.size)) {
         this.parent.vel.y = 0;
         this.parent.pos = yShifted;
         return true;
     }
     var zShifted = this.pos.clone();
-    zShifted.z += this.parent.vel.z * low;
+    zShifted.z += vel.z * low;
     if (!CollisionBox.isInside(zShifted, this.size, other.pos, other.size)) {
         this.parent.vel.z = 0;
         this.parent.pos = zShifted;

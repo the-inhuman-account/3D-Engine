@@ -15,7 +15,12 @@ class GameController {
           new Block(this, new Vector3D(0, 0, 0), new Vector3D(100, 0.1, 0.1), "0xff0000"),
           new Block(this, new Vector3D(0, 0, 0), new Vector3D(0.1, 100, 0.1), "0x00ff00"),
           new Block(this, new Vector3D(0, 0, 0), new Vector3D(0.1, 0.1, 100), "0x0000ff"),
-          new Block(this, new Vector3D(0, 0, -1), new Vector3D(20, 0.5, 20))
+          new Block(this, new Vector3D(0, 0, -1), new Vector3D(20, 0.5, 20), "0xaaaaaa", "textures/wood_texture.jpg"),
+          new Block(this, new Vector3D(0, 10, 8), new Vector3D(20, 20, 0.5), "0xaaaaaa", "textures/wood_texture.jpg"),
+          new Block(this, new Vector3D(0, 10, -8), new Vector3D(20, 20, 0.5), "0xaaaaaa", "textures/wood_texture.jpg"),
+          new Block(this, new Vector3D(8, 10, 0), new Vector3D(0.5, 20, 20), "0xaaaaaa", "textures/wood_texture.jpg"),
+          new Block(this, new Vector3D(5, 20, 5), new Vector3D(12, 0.5, 5), "0xaaaaaa", "textures/wood_texture.jpg"),
+          new Block(this, new Vector3D(2, 0, 2), new Vector3D(2, 0.4, 2), "0xaaaaaa", "textures/iron_texture.jpg", (obj) => { obj.pos.y = 10 * Math.sin(performance.now() / 5000 + 3) + 10.1; obj.vel.y = 20/10000 * Math.cos(performance.now() / 10000 - 0.5); } ),
         ],
         "npcs": [
           this.player,
