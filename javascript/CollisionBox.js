@@ -72,26 +72,26 @@ class CollisionBox {
     if (!CollisionBox.isInside(xShifted, this.size, other.pos, other.size)) {
         this.parent.vel.x = 0;
         this.parent.pos = xShifted;
-        return true;
+        return false;
     }
     var yShifted = this.pos.clone();
     yShifted.y += vel.y * low;
     if (!CollisionBox.isInside(yShifted, this.size, other.pos, other.size)) {
         this.parent.vel.y = 0;
         this.parent.pos = yShifted;
-        return true;
+        return true; // Only return true if the object lands on the top of a surface.
     }
     var zShifted = this.pos.clone();
     zShifted.z += vel.z * low;
     if (!CollisionBox.isInside(zShifted, this.size, other.pos, other.size)) {
         this.parent.vel.z = 0;
         this.parent.pos = zShifted;
-        return true;
+        return false;
     }
     // If for whatever reason the object is not axis-aligned, zero all velocity. 
     this.pos.shift( this.parent.vel.getScaled(low) );
     this.parent.vel.scale(0);
-    return true;
+    return false;
   }
 
 }

@@ -1,6 +1,6 @@
 class NPC {
 
-  constructor(GC, pos, size, color = "0xb0b000", texturePath = "") {
+  constructor(GC, pos, size, color = "0x00f000", texturePath = "", behavior = function(obj) { return; } ) {
     this.GC = GC; // the GameController
     this.pos = pos;
     this.vel = new Vector3D(0, 0, 0);
@@ -10,6 +10,7 @@ class NPC {
     this.collisionBox = new CollisionBox(this);
     this.texturePath = texturePath; // file path for the texture image
     this.prevTime = performance.now();
+    this.behavior = behavior;
   }
 
   display() {
@@ -28,6 +29,7 @@ class NPC {
   update() {
     this.physics();
     this.display();
+    this.behavior(this);
   }
 
 }

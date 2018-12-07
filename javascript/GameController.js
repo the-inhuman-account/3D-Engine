@@ -3,7 +3,7 @@ class GameController {
   constructor(ThreeScene, ThreeCamera) {
     this.ThreeScene = ThreeScene; // The scene object from Three.js
     this.ThreeCamera = ThreeCamera; // The camara object from Three.js
-    this.player = new Player(this, new Vector3D(5, 10, 5), new Vector3D(1, 2, 1), "0x00ff00", "", {
+    this.player = new Player(this, new Vector3D(5, 10, 5), new Vector3D(0.5, 2, 0.5), "0x00ff00", "", {
         "speed": 10,
         "jumpSpeed": 300,
         "lookSpeed": 15
@@ -12,20 +12,21 @@ class GameController {
       {
         "title": "Introduction",
         "objects": [
-          new Block(this, new Vector3D(0, 0, 0), new Vector3D(100, 0.1, 0.1), "0xff0000"),
-          new Block(this, new Vector3D(0, 0, 0), new Vector3D(0.1, 100, 0.1), "0x00ff00"),
-          new Block(this, new Vector3D(0, 0, 0), new Vector3D(0.1, 0.1, 100), "0x0000ff"),
-          new Block(this, new Vector3D(0, 0, -1), new Vector3D(20, 0.5, 20), "0xaaaaaa", "textures/wood_texture.jpg"),
+          new Block(this, new Vector3D(0, 0, 0), new Vector3D(100, 0.1, 0.1), "0xff0000"), // x axis
+          new Block(this, new Vector3D(0, 0, 0), new Vector3D(0.1, 100, 0.1), "0x00ff00"), // y axis
+          new Block(this, new Vector3D(0, 0, 0), new Vector3D(0.1, 0.1, 100), "0x0000ff"), // z axis
+          new Block(this, new Vector3D(0, 0, 0), new Vector3D(20, 0.5, 20), "0xaaaaaa", "textures/wood_texture.jpg"),
+          new Block(this, new Vector3D(0, -1, 0), new Vector3D(80, 0.5, 80), "0xaaaaaa", "textures/iron_texture.jpg"),
           new Block(this, new Vector3D(0, 10, 8), new Vector3D(20, 20, 0.5), "0xaaaaaa", "textures/wood_texture.jpg"),
           new Block(this, new Vector3D(0, 10, -8), new Vector3D(20, 20, 0.5), "0xaaaaaa", "textures/wood_texture.jpg"),
           new Block(this, new Vector3D(8, 10, 0), new Vector3D(0.5, 20, 20), "0xaaaaaa", "textures/wood_texture.jpg"),
           new Block(this, new Vector3D(5, 20, 5), new Vector3D(12, 0.5, 5), "0xaaaaaa", "textures/wood_texture.jpg"),
-          new Block(this, new Vector3D(2, 0, 2), new Vector3D(2, 0.4, 2), "0xaaaaaa", "textures/iron_texture.jpg", (obj) => { obj.pos.y = 10 * Math.sin(performance.now() / 5000 + 3) + 10.1; obj.vel.y = 20/10000 * Math.cos(performance.now() / 10000 - 0.5); } ),
+          new Block(this, new Vector3D(2, 0, 2), new Vector3D(2, 0.4, 2), "0xaaaaaa", "textures/iron_texture.jpg", (obj) => { obj.pos.y = 10 * Math.sin(performance.now() / 5000 + 3) + 10.1; obj.vel.y = 20/10000 * Math.cos(performance.now() / 5000 + 3); } ),
         ],
         "npcs": [
           this.player,
           new NPC(this, new Vector3D(4, 8, 1), new Vector3D(1, 2, 1), ""),
-          new NPC(this, new Vector3D(-3, 2, 1.2), new Vector3D(0.5, 2.4, 0.5), ""),
+          new NPC(this, new Vector3D(-3, 2, 1.2), new Vector3D(0.5, 2.4, 0.5), "", "", (obj) => { obj.pos.x = 5*Math.sin(performance.now()/2000); obj.pos.z = 5*Math.cos(performance.now()/2587); obj.vel.x = 5/2000*Math.cos(performance.now()/2000); obj.vel.z = -5/2587*Math.sin(performance.now()/2587);} ),
           new NPC(this, new Vector3D(0, 2, 0.7), new Vector3D(1, 1.4, 1), ""),
         ]
       },
