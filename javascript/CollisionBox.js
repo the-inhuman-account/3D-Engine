@@ -57,14 +57,14 @@ class CollisionBox {
     var high = 0, low = -1, mid, i;
     for (i = 0; i < this.uncollideSteps; i++) {
       mid = (high + low) / 2;
-      if (CollisionBox.isInside(this.pos.getShifted( this.parent.vel.getScaled(mid) ), this.size, other.pos, other.size)) {
+      if (CollisionBox.isInside(this.pos.getShifted( vel.getScaled(mid) ), this.size, other.pos, other.size)) {
         high = mid; // If the middle box is still inside, then the box needs to go out farther.
       }
       else {
         low = mid; // If the middle box is still inside, then the box needs to go out less.
       }
     }
-    // There are only three directions because everything is constrainted be
+    // There are only three directions because everything is constrainted to
     // align with the axes. Thus, only one component of the velocity is
     // necessary to extract the object. We test them all.
     var xShifted = this.pos.clone();

@@ -12,6 +12,10 @@ scene.add( light );
 var light = new THREE.PointLight( 0xffffff, 10, 100 );
 light.position.set( -5, 5, -5 );
 scene.add( light );
+
+var light = new THREE.PointLight( 0xffffff, 50, 500 );
+light.position.set(0, 50, 0);
+scene.add( light );
 /////////////////////////// /Temporary Lighting //////////////////////////////
 
 var renderer = new THREE.WebGLRenderer();

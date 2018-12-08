@@ -32,6 +32,12 @@ class Vector3D {
     this.scale(1 / this.getMagnitude());
   }
   
+  set(x, y, z) {
+      this.x = x;
+      this.y = y;
+      this.z = z;
+  }
+
   getShifted(other) {
     return new Vector3D(this.x + other.x, this.y + other.y, this.z + other.z);
   }

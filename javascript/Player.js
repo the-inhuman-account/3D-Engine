@@ -7,11 +7,12 @@ class Player extends NPC {
         this.jumpSpeed = controls.jumpSpeed;
         this.lookSpeed = controls.lookSpeed;
         this.lat = 0;
-        this.lon = 0;
+        this.lon = 90; // The player starts looking horizontally.
         this.theta = 0;
         this.phi = 0;
         this.maxCraneAngle = 89; // The highest degree the player can look up at.
         this.justCollided = false;
+        this.spawnPoint = pos.clone(); // Where the player will respawn if they fall out of the world.
     }
 
     updateControls() {
@@ -48,6 +49,9 @@ class Player extends NPC {
         this.pos.shift(this.vel.getScaled(GC.delta));
         this.justCollided = false;
         this.justCollided = this.GC.checkCollision(this);
+        if (this.pos.y < PHYSICS.OUT_OF_WORLD) {
+            this.pos = this.spawnPoint.clone();
+        }
 
         this.updateCamera();
     }

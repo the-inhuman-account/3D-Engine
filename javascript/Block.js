@@ -15,7 +15,12 @@ class Block {
       this.collisionBox.display();
   }
   
+  physics() {
+      this.pos.shift(this.vel.getScaled(this.GC.delta));
+  }
+
   update() {
+      this.physics();
       this.display();
       this.behavior(this);
   }
